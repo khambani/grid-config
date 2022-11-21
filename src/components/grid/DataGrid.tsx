@@ -1,27 +1,27 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import PropTypes from 'prop-types';
 import { render } from 'react-dom'; 
 import { ClientSideRowModelModule } from "@ag-grid-community/client-side-row-model";
 import { AgGridColumn, AgGridReact } from '@ag-grid-community/react';
 import '@ag-grid-community/core/dist/styles/ag-grid.css';
 import '@ag-grid-community/core/dist/styles/ag-theme-alpine.css';
 
-const DataGrid = () => {
-    const [rowData] = useState([
-        { make: 'Toyota', model: 'Celica', price: 35000 },
-        { make: 'Ford', model: 'Mondeo', price: 32000 },
-        { make: 'Porsche', model: 'Boxter', price: 72000 },
-      ]);
+const DataGrid = ({columns ,rows }:{columns:[], rows:[]}) => {
+    const [columnDefs, setColumns ] = useState(columns || []);
+    const [rowData, setRowData] = useState(rows || []);
+    const [height, setHeight] = useState(400);
     
-      const [columnDefs] = useState([
-        { field: 'make' },
-        { field: 'model' },
-        { field: 'price' },
-      ]);
-    
-      return (
-        <div className="ag-theme-alpine" style={{ height: 400, width: 600 }}>
-          <AgGridReact modules={[ClientSideRowModelModule]} rowData={rowData} columnDefs={columnDefs}></AgGridReact>
-        </div>
-      );
+    return (
+    <div className="ag-theme-alpine" style={{ height: "90%", width: 600 }}>
+    { columnDefs ? <AgGridReact modules={[ClientSideRowModelModule]} rowData={rowData} columnDefs={columnDefs}></AgGridReact> : null }
+    </div>
+    );
 };
+
+
+DataGrid.propTypes = {
+    columns :PropTypes.array.isRequired,
+    rows:PropTypes.array.isRequired
+}
+
 export default DataGrid;
