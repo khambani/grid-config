@@ -57,11 +57,11 @@ const Dashboard = ()=> {
 
     return (
         <div style={{height:"100%"}}>
-            <FormControl fullWidth sx={{ m: 1, flexDirection:"row", gap:4, paddingRight:10}} variant="standard">
+            <FormControl fullWidth sx={{ m: 1, flexDirection:"row", gap:2, paddingRight:10}} variant="standard">
                 <InputLabel htmlFor="standard-adornment-amount">API Url:</InputLabel>
                 <Input ref={inputRef} sx={{width:'99%'}}
                     startAdornment={<InputAdornment position="start" ></InputAdornment>} onChange={onInputChange}>{url}</Input>
-                <Button variant="contained" size="small" sx={{minWidth:100, right:10}} onClick={loadUrl}>Load Grid</Button>
+                <Button variant="contained" size="small" sx={{minWidth:100, right:10, height:30}} onClick={loadUrl}>Load Grid</Button>
             </FormControl>
             
             <Checkbox checked={toggleJsonView} onChange={()=>setToggleJsonView(!toggleJsonView)}>Toggle JSON View</Checkbox>
