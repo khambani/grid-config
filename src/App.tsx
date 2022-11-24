@@ -1,23 +1,21 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { createContext, useEffect, useReducer, useState } from "react";
 import styles from "./App.module.css";
-import { AppBar, IconButton, Toolbar, Typography } from "@mui/material";
 import Header from "./components/header/Header";
 import Sidebar from "./components/sidebar/Sidebar";
 import AppContext, {useAppContext} from "./contexts/AppContext";
-import CloseIcon from '@mui/icons-material/Close';
 import Dashboard from "./pages/Dashboard";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import SettingVO from "./interface/Settings.types";
 
 function App() {
-  const [opened, setOpened] = useState(false);
-  const queryClient = new QueryClient()
+  const defaultSettings:SettingVO = {columns:[], opened:false};
+
+  const [settings, setSettings] = useState<SettingVO>(defaultSettings);
   return (
     <div className={styles.container}>
-      <QueryClientProvider client={queryClient}>
-        <AppContext.Provider value={[opened, setOpened]}>
+        <AppContext.Provider value={[settings, setSettings]}>
           <Header />
-          <Sidebar />
+          <Sidebar/>
           <Routes>
             <Route
               index 
@@ -25,7 +23,6 @@ function App() {
             />
           </Routes>
         </AppContext.Provider>
-      </QueryClientProvider>
     </div>
   );
 }

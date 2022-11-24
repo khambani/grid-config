@@ -1,19 +1,37 @@
-import { Close } from "@mui/icons-material";
 import CloseIcon from "@mui/icons-material/Close";
-import { Drawer } from "@mui/material";
-import React, { useContext } from "react";
+import { Drawer, Typography } from "@mui/material";
+import React, { useContext, useEffect, useState } from "react";
 import AppContext from "../../contexts/AppContext";
+import SettingVO from "../../interface/Settings.types";
+import styles from './sidebar.module.css';
 
 const list = () => {
-    const [opened, setOpened]= useContext(AppContext);
-    return (<div>This is sidebar <CloseIcon onClick={()=>setOpened(false)}></CloseIcon></div>);
+    const [settings, setSettings]= useContext<SettingVO>(AppContext);
+    
+    useEffect(()=>{
+        console.log("list >", settings);
+    })
+
+    return (
+        <div className={styles.columnContainer}> 
+            <Typography varient="h3">Columns Settings</Typography>
+            <CloseIcon onClick={()=>setSettings({...settings, opened:false})}></CloseIcon>
+            {settings.columns ? settings.columns.map(column=><div key={column.field}>{column.field}</div>) : null}
+        </div>
+    );
 }
 const Sidebar = () => {
-    const [opened, setOpened]= useContext(AppContext);
+    const [settings, setSettings]= useContext<SettingVO>(AppContext);
+    const [columns, setColumns] = useState<any[]>(settings.columns);
+
+    useEffect(()=>{
+        console.log("Sidebar >", columns);
+    })
+
     return (
         <React.Fragment>
-            <Drawer anchor="right" open={opened} onClose={()=>setOpened(false)}>
-            {list()}
+            <Drawer anchor="right" open={settings.opened} onClose={()=>setSettings({...settings, opened:false})}>
+                {list()}
             </Drawer>
         </React.Fragment>
     );
